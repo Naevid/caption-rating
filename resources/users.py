@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse, fields, marshal_with, abort
 from models import db, UserModel
-from parsers import user_args
+
 
 user_args = reqparse.RequestParser()
 user_args.add_argument('email', type=str, required=True)
