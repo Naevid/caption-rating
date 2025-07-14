@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 import os
+from isodate import parse_duration
+from datetime import datetime
 
 load_dotenv()
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
@@ -18,9 +20,9 @@ def fetchMetadata(videoID):
     return {
         "title": snippet['title'],
         "channel": snippet['channelTitle'],
-        "duration": details['duration'],
-        "thumbnail": snippet['thumbnails'],
-        "created": snippet['publishedAt'],
+        "duration": int(parse_duration(details['duration']).total_seconds()),
+        "thumbnail": snippet['thumbnails'].get("high", {}).get('url', ''),
+        "created": datetime.fromisoformat(snippet['publishedAt'].replace("Z", "+00:00")),
         "likes": int(stats['likeCount']),
         "views": int(stats['viewCount']),
         "language": snippet['defaultAudioLanguage']
