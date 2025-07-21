@@ -1,7 +1,6 @@
 from flask_restful import Resource, reqparse, fields, marshal_with, abort
 from models import db, UserModel
 
-
 user_args = reqparse.RequestParser()
 user_args.add_argument('email', type=str, required=True)
 
@@ -41,6 +40,7 @@ class User(Resource):
         db.session.commit()
         return {"message": "User deleted"}
     
+    @marshal_with(userFields)
     def patch(self, userID):
         args = user_args.parse_args()
         user = UserModel.query.get(userID)

@@ -65,5 +65,5 @@ class Ratings(Resource):
             abort(404, "Rating not found")
         db.session.delete(rating)
         db.session.commit()
-        return {"message": "Rating deleted successfully"}, 200
+        return {"message": "Rating deleted"}, 200
         
